@@ -1,0 +1,29 @@
+# === Data files ===
+*.mat
+*.npy
+*.npz
+*.h5
+*.hdf5
+runs/
+
+# === Python cache / env ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# === IDE / Editor ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# === OS generated ===
+.DS_Store
+Thumbs.db
