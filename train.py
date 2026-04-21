@@ -9,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 import multiprocessing
 from data_utils import load_and_seg_data, extract_stft_features, sEMGDataset
-from model import ChannelAttentionCNN, SINCA, SINDP
+from model import ChannelAttentionCNN, SINCA_s, SINCA_xs, SINCA_xxs
 
 
 def train_model(feature_model, model, train_loader, val_loader, optimizer, criterion,
@@ -319,18 +319,21 @@ class Runner:
 
         if model_type == "stft+cacnn":
             return ChannelAttentionCNN(num_classes=17, input_channels=12)
-        elif model_type == "sinca":
-            return SINCA(
+        elif model_type == "sinca-s":
+            return SINCA_s(
                 num_classes=num_classes,
                 input_channels=num_channels
             )
-        elif model_type == "sindp":
-            return SINDP(
+        elif model_type == "sinca-xs":
+            return SINCA_xs(
                 num_classes=num_classes,
                 input_channels=num_channels
             )
+        elif model_type == "SINCA_xxs":
+            return SINCA_xxs(num_classes=num_classes, input_channels=num_channels)
         else:
             raise ValueError(f"Unknown model type: {model_type}")
+
 
     def train_epoch(self, loader):
         """Train for one epoch"""

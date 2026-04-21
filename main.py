@@ -8,7 +8,7 @@ import torch.nn as nn
 from train import Runner
 
 
-def run_experiment(model_type, subject, data_dir, run_dir, batch_size, val_split):
+def run_experiment(model_type, subject, data_dir, run_dir, batch_size, val_split, seed):
     """Run single experiment"""
     # Create save dir
     model_save_dir = os.path.join(run_dir, model_type, f"subject_{subject}")
@@ -39,7 +39,7 @@ def run_experiment(model_type, subject, data_dir, run_dir, batch_size, val_split
         'clip_grad': None,
         'is_classifier': True,
         'num_workers': 4,
-        'seed': 42, #seed,
+        'seed': seed,
     }
 
     # Run experiments
@@ -66,23 +66,24 @@ def main():
     parser = argparse.ArgumentParser(description='Experiment Grid: Compare Different Models')
     parser.add_argument('--data_dir', default='./data/DB2', help='Dataset directory')
     parser.add_argument('--run_dir', default='./runs/exp1_grid', help='Output directory')
-    parser.add_argument('--batch_size', type=int, default=300, help='Batch size')
+    parser.add_argument('--batch_size', type=int, default=256, help='Batch size')
     args = parser.parse_args([])
 
     # Model comparisons
     model_types = [
-         "sinca",
+        'sinca-s'
          #"stft+cacnn",
     ]
 
     # Set seed
     # set_seed(42)
-    subjects = list(range(1, 41))
-    # val_splits = [0, 0.2, 0.4, 0.6, 0.8]
+    subjects = list(range(1, 2))
+    val_splits = [0.2] # val_splits = [0, 0.2, 0.4, 0.6, 0.8]
     # Run models, subjects and valiation splits
     for model_type in model_types:
-        for subject in subjects:
-            # for val_split in val_splits:
+        for val_split in val_splits:
+            for subject in subjects:
+                # for seed in [0, 2026]:
                 print(f"\n{'=' * 50}")
                 print(f"Running Model: {model_type} - Subject: {subject}")
                 print(f"{'=' * 50}")
@@ -94,12 +95,13 @@ def main():
                     data_dir=args.data_dir,
                     run_dir=args.run_dir,
                     batch_size=args.batch_size,
-                    val_split=0.2,
+                    val_split=val_split,
+                    seed=42
                 )
                 elapsed = time.time() - start_time
                 print(f"Completed in {elapsed:.2f} seconds. Accuracy: {test_acc:.4f}")
     print("\nExperiment Grid Complete!")
-    print(f"Results saved to: {os.path.join(args.run_dir, 'exp1_grid_results.csv')}")
+    print(f"Results saved to: {os.path.join(args.run_dir, 'exp_grid_results.csv')}")
 
 
 if __name__ == "__main__":
