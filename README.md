@@ -1,5 +1,5 @@
 # SINCA
-A lightweight model architecture using a **S**pectral **IN**ception Encoder and **C**hannel **A**ttention for sEMG-based hand gesture recognition.
+A lightweight model architecture using **S**pectral **IN**ception Encoder and **C**hannel **A**ttention for sEMG-based hand gesture recognition.
 
 The repository is the implementation of the EMBC 2026 paper: ``Lightweight Learnable Spectral Inception Network for Hand Gesture Recognition from SEMG Signals``.
 
