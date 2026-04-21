@@ -3,14 +3,14 @@ A lightweight model architecture using a **S**pectral **IN**ception Encoder and 
 
 The repository is the implementation of the EMBC 2026 paper: ``Lightweight Learnable Spectral Inception Network for Hand Gesture Recognition from SEMG Signals``.
 
-# Install & Dependencies
+## Install & Dependencies
 We use ``conda`` to set the related environment and dependencies. The code was tested in Ubuntu 24.04.
 ```
 conda create -n env python=3.12
 pip install numpy, scipy, pandas, matplotlib, torch, torchvision 
 ```
 
-# Structure
+## Structure
 ```
 semg-sinca
 │   README.md	
@@ -32,7 +32,7 @@ semg-sinca
 * You can use ``tensorboard`` to check each subject after training. 
 * save dir provides ``mean_std.py`` used for the report.
 
-# Usage
+## Usage
 To run the scripts, you can use the following command with specific arguments
 ```
 python -m main 
