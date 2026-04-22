@@ -231,6 +231,7 @@ class Runner:
     def set_seeds(self, seed):
         """Set random seeds for reproducibility"""
         random.seed(seed)
+        os.environ['PYTHONHASHSEED'] = str(seed)
         np.random.seed(seed)
         torch.manual_seed(seed)
         if torch.cuda.is_available():
@@ -285,6 +286,8 @@ class Runner:
         val_size = int(len(train_dataset) * self.config.get('val_split', 0.2))
         train_size = len(train_dataset) - val_size
         self.num_epochs = train_size // self.config['batch_size']
+#        if self.num_epochs < 30:
+#            self.num_epochs = 30
         num_workers = self.config.get('num_workers', min(4, multiprocessing.cpu_count()))
         train_data = train_dataset
         self.val_loader = None
@@ -319,21 +322,23 @@ class Runner:
 
         if model_type == "stft+cacnn":
             return ChannelAttentionCNN(num_classes=17, input_channels=12)
-        elif model_type == "sinca-s":
-            return SINCA_s(
+        elif model_type == "sinca_xxs":
+            return SINCA_xxs(
                 num_classes=num_classes,
                 input_channels=num_channels
             )
-        elif model_type == "sinca-xs":
+        elif model_type == "sinca_xs":
             return SINCA_xs(
                 num_classes=num_classes,
                 input_channels=num_channels
             )
-        elif model_type == "SINCA_xxs":
-            return SINCA_xxs(num_classes=num_classes, input_channels=num_channels)
+        elif model_type == "sinca_s":
+            return SINCA_s(
+                num_classes=num_classes,
+                input_channels=num_channels
+            )
         else:
             raise ValueError(f"Unknown model type: {model_type}")
-
 
     def train_epoch(self, loader):
         """Train for one epoch"""

@@ -104,6 +104,7 @@ class ChannelAttention(nn.Module):
             nn.Linear(in_channels, in_channels // reduction_ratio),
             nn.ReLU(),
             nn.Linear(in_channels // reduction_ratio, in_channels),
+            nn.Sigmoid()
         )
         self.sigmoid = nn.Sigmoid()
 
@@ -113,7 +114,6 @@ class ChannelAttention(nn.Module):
         max_out = self.fc(self.max_pool(x).view(B, C))
         attention = self.sigmoid(avg_out + max_out)
         return x * attention.unsqueeze(2).unsqueeze(3)
-
 
 class ChannelAttentionCNN(nn.Module):
     """CNN with channel attention for classification."""
@@ -165,13 +165,13 @@ class SINCA_s(nn.Module):
             nn.BatchNorm2d(32),
             nn.ReLU(),
             ChannelAttention(32),
-            nn.MaxPool2d(2),
+            nn.MaxPool2d((2, 2)),
 
             nn.Conv2d(32, 64, kernel_size=(3, 3), padding=(1, 1)),
             nn.BatchNorm2d(64),
             nn.ReLU(),
             ChannelAttention(64),
-            nn.MaxPool2d(2)
+            nn.MaxPool2d((2, 2)),
         )
 
         self.classifier = nn.Sequential(
@@ -186,9 +186,9 @@ class SINCA_s(nn.Module):
 
         resized_specs = []
         for spec in specs:
-            if spec.shape[2] != target_H or spec.shape[3] != target_W:
-                spec = F.interpolate(spec, size=(target_H, target_W), mode='nearest')
-            resized_specs.append(spec)
+                if spec.shape[2] != target_H or spec.shape[3] != target_W:
+                    spec = F.interpolate(spec, size=(target_H, target_W), mode='nearest')
+                resized_specs.append(spec)
 
         combined = torch.cat(resized_specs, dim=1)
         features = self.cnn(combined)
@@ -215,7 +215,7 @@ class SINCA_xs(nn.Module):
             nn.BatchNorm2d(48),
             nn.ReLU(),
             ChannelAttention(48),
-            nn.MaxPool2d(2)
+            nn.MaxPool2d(2),
         )
 
         self.classifier = nn.Sequential(
