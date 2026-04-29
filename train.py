@@ -239,6 +239,7 @@ class Runner:
             torch.backends.cudnn.deterministic = True
             torch.backends.cudnn.benchmark = False
 
+
     def get_device(self):
         """Get training device"""
         return torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -286,12 +287,14 @@ class Runner:
         val_size = int(len(train_dataset) * self.config.get('val_split', 0.2))
         train_size = len(train_dataset) - val_size
         self.num_epochs = train_size // self.config['batch_size']
-#        if self.num_epochs < 30:
+#       if self.num_epochs < 30:
 #            self.num_epochs = 30
         num_workers = self.config.get('num_workers', min(4, multiprocessing.cpu_count()))
         train_data = train_dataset
         self.val_loader = None
         if val_size != 0:
+            # train_size1 = int(train_size * 0.8)
+            # train_size2 = train_size - train_size1
             train_data, val_data = random_split(train_dataset, [train_size, val_size])
             self.val_loader = DataLoader(
                 val_data,
@@ -300,7 +303,7 @@ class Runner:
                 num_workers=num_workers,
                 pin_memory=torch.cuda.is_available()
             )
-
+        # self.val_loader = None
         self.train_loader = DataLoader(
             train_data,
             batch_size=self.config['batch_size'],

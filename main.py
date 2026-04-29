@@ -71,9 +71,10 @@ def main():
 
     # Model comparisons
     model_types = [
-        # 'sinca_s',
-        'sinca_xs',
         'sinca_xxs',
+        'sinca_xs',
+        'sinca_s',
+
         # "stft+cacnn",
     ]
 
@@ -83,7 +84,7 @@ def main():
     val_splits = [0.2] # val_splits = [0, 0.2, 0.4, 0.6, 0.8]
     # Run models, subjects and validation splits
     for model_type in model_types:
-        for seed in [0, 42, 1234, 2026]:
+        for seed in [0, 42, 1234, 2026, 3047]:
             for val_split in val_splits:
                 for subject in subjects:
                     print(f"\n{'=' * 50}")
