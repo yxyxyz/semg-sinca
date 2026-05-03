@@ -271,13 +271,7 @@ class Runner:
             # Extract STFT features
             X_train_stft, _, _ = extract_stft_features(X_train_scaled)
             X_test_stft, _, _ = extract_stft_features(X_test_scaled)
-
-            # Standardize STFT features
-            mean_stft = np.mean(X_train_stft, axis=(0, 1, 2), keepdims=True)
-            std_stft = np.std(X_train_stft, axis=(0, 1, 2), keepdims=True) + 1e-8
-            train_features = (X_train_stft - mean_stft) / std_stft
-            test_features = (X_test_stft - mean_stft) / std_stft
-            train_features = np.transpose(train_features, (0, 3, 1, 2))
+            train_features = np.transpose(X_train_stft, (0, 3, 1, 2))
             test_features = np.transpose(test_features, (0, 3, 1, 2))
         # Create datasets
         train_dataset = sEMGDataset(train_features, y_train)

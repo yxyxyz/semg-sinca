@@ -96,7 +96,7 @@ class sEMGDataset(Dataset):
             torch.tensor(self.labels[idx], dtype=torch.long)
         )
 
-def extract_stft_features(data):
+def extract_stft_features(data, nperseg=48, fs=2000):
     """
     Computes STFT features (magnitude) from raw sEMG data.
 
@@ -113,9 +113,9 @@ def extract_stft_features(data):
     batch_size, sequence_length, channels = data.shape
 
     # Define STFT parameters
-    nperseg = 48 #64 # Window size
+    #nperseg = 64 #64 # Window size
     noverlap = nperseg // 2 # 50% overlap
-    fs = 2000 # Assuming sampling frequency of 1000 Hz
+    #fs = 2000 # Assuming sampling frequency of 1000 Hz
 
     all_stft_magnitudes = []
     freqs = None
