@@ -46,7 +46,7 @@ We would greatly appreciate it if you cite our EMBC 2026 paper when using this r
 ```
 @inproceedings{yang2026sinca,
   title={Lightweight Learnable Spectral Inception Network for Hand Gesture Recognition from SEMG Signals},
-  author={Yang, Yuxin and Ren, Shiqi and Wu, Minliang},
+  author={Yang, Yuxin and Ren, Shiqi and Li, Hao and Wu, Minliang},
   booktitle={2026 48th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)},
   year={2026},
   organization={IEEE}
