@@ -42,7 +42,7 @@ python -m main
 Training and evaluation are in ``train.py``. Feel free to modify or use them.
 
 ## ToDo
-* Develop adaptive feature encoding and revise the multi-scale concatenation.
+* Enhance feature encoding and revise the multi-scale concatenation.
 * Integrate residual connections for the CNN backbone.
 * Design a spatial and temporal multi-path architecture.
 
