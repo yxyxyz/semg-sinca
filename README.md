@@ -33,7 +33,7 @@ semg-sinca
 * save dir provides ``mean_std.py`` used for the report.
 
 ## Usage
-To run the scripts, you can use the following command with specific arguments
+To run the scripts, you can use the following command with specific arguments.
 ```
 python -m main 
 ```
@@ -41,8 +41,16 @@ python -m main
 ## Training & Evaluation
 Training and evaluation are in ``train.py``. Feel free to modify or use them.
 
+## ToDo
+* Develop adaptive feature encoding and revise the multi-scale concatenation.
+* Integrate residual connections for the CNN backbone.
+* Design a spatial and temporal multi-path architecture.
+
+**Note:** Upsampling can be affected by randomness in PyTorch and CUDA. Recommend using TensorFlow for deterministic results. 
+  
+
 ## Citation 
-We would greatly appreciate it if you cite our EMBC 2026 paper when using this repository
+We would greatly appreciate it if you cite our EMBC 2026 paper when using this repository.
 ```
 @inproceedings{yang2026sinca,
   title={Lightweight Learnable Spectral Inception Network for Hand Gesture Recognition from SEMG Signals},
